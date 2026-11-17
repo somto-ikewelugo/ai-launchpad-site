@@ -1,0 +1,94 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Theme tokens — derived from the AI Launchpad logo
+   (charcoal mark, orange flame, cream backdrop)
+   ========================================================= */
+:root {
+  --background: 245 243 236;   /* #F5F3EC cream */
+  --surface: 255 255 255;      /* #FFFFFF */
+  --surface-2: 236 233 223;    /* #ECE9DF */
+  --foreground: 23 27 35;      /* #171B23 charcoal */
+  --muted: 92 99 110;          /* #5C636E */
+  --border: 221 217 205;       /* #DDD9CD */
+  --accent: 242 103 28;        /* #F2671C orange */
+  --accent-soft: 255 237 224;  /* #FFEDE0 */
+}
+
+.dark {
+  --background: 13 16 21;       /* #0D1015 deep charcoal */
+  --surface: 20 25 33;         /* #141921 */
+  --surface-2: 28 34 44;       /* #1C222C */
+  --foreground: 240 240 234;   /* #F0F0EA */
+  --muted: 154 161 173;        /* #9AA1AD */
+  --border: 42 49 61;          /* #2A313D */
+  --accent: 255 122 46;        /* #FF7A2E brighter orange for dark bg */
+  --accent-soft: 46 33 24;     /* #2E2118 */
+}
+
+* {
+  border-color: rgb(var(--border));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: rgb(var(--background));
+  color: rgb(var(--foreground));
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Prevent theme flash by hiding until next-themes mounts handled via suppressHydrationWarning */
+
+::selection {
+  background-color: rgb(var(--accent) / 0.25);
+}
+
+/* Utility: subtle grid / glow backgrounds */
+.bg-grid {
+  background-image:
+    linear-gradient(to right, rgb(var(--border) / 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(var(--border) / 0.5) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 0%, #000 40%, transparent 100%);
+}
+
+.glow-accent {
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgb(var(--accent) / 0.18),
+    transparent 70%
+  );
+}
+
+/* Reveal-on-scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .animate-float,
+  .animate-fade-up {
+    animation: none !important;
+  }
+}
